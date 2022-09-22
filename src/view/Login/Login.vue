@@ -6,7 +6,7 @@
         <div id="form">
             <el-input v-model="username" placeholder="请输入内容"></el-input>
             <el-input placeholder="请输入密码" v-model="password" show-password></el-input>
-            <el-button type="primary">login</el-button>
+            <el-button type="primary" @click="login">login</el-button>
         </div>
         </el-card>
     </div>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
   export default {
     name:'Login',
     data(){
@@ -27,15 +29,26 @@
             password:'',
             time:'',
             date:'',
+            name:'',
+            key:'',
         }
+    },
+    created(){
+        axios.get('./../static/post.json').then(res=>{
+            // console.log(res.data)
+            this.name=res.data.username;
+            this.key=res.data.password;
+        },err=>{
+          console.log(err)
+        })
     },
     mounted(){
         this.$nextTick(()=>{
             setInterval(this.update_clock,1000)
-        })
+        })       
     },
     methods:{
-        update_clock(){
+        update_clock(e){
             let d=new Date();
             let year=d.getFullYear();
             if(year<10){
@@ -59,6 +72,14 @@
             }
             this.time=hour+':' + minute;
             this.date=year+'/'+month +'/'+day;
+        },
+        login(){
+            if(this.username==this.name && this.password==this.key){
+                this.$router.push('/home')
+            }else{
+                alert('登录失败')
+            }
+
         }
     }
   }

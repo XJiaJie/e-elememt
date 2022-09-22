@@ -10,8 +10,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "async_hooks": "^1.0.0",
+    "axios": "^0.27.2",
     "element-ui": "^2.15.10",
     "vue": "^2.5.2",
+    "vue-resource": "^1.5.3",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
